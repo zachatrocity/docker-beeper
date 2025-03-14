@@ -65,34 +65,35 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Build and push arm64 Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile.aarch64
-          platforms: linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}-arm64
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      # ARM64 build is commented out until Beeper supports ARM64 AppImage
+      # - name: Build and push arm64 Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     file: ./Dockerfile.aarch64
+      #     platforms: linux/arm64
+      #     push: ${{ github.event_name != 'pull_request' }}
+      #     tags: ${{ steps.meta.outputs.tags }}-arm64
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
 
+      # Manifest creation is simplified until ARM64 support is added
       - name: Create and push manifest
         if: github.event_name != 'pull_request'
         run: |
           # Extract the image name without the registry
           IMAGE_WITHOUT_REGISTRY=$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
           
-          # For each tag, create a manifest that includes both architectures
+          # For each tag, create a manifest with just the amd64 image
           for tag in $(echo "${{ steps.meta.outputs.tags }}" | tr '\n' ' '); do
             # Extract just the tag part (after the last colon)
             TAG_ONLY=$(echo "$tag" | rev | cut -d':' -f1 | rev)
             
-            # Create the manifest
+            # Create the manifest with only amd64
             docker manifest create \
               ${{ env.REGISTRY }}/$IMAGE_WITHOUT_REGISTRY:$TAG_ONLY \
-              ${{ env.REGISTRY }}/$IMAGE_WITHOUT_REGISTRY:$TAG_ONLY \
-              ${{ env.REGISTRY }}/$IMAGE_WITHOUT_REGISTRY:$TAG_ONLY-arm64
+              ${{ env.REGISTRY }}/$IMAGE_WITHOUT_REGISTRY:$TAG_ONLY
             
             # Push the manifest
             docker manifest push ${{ env.REGISTRY }}/$IMAGE_WITHOUT_REGISTRY:$TAG_ONLY

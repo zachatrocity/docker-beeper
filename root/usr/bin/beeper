@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BIN=/opt/obsidian/obsidian
+BIN=/opt/beeper/beepertexts
 
 # Run normally on privved containers or modified un non priv
 if grep -q 'Seccomp:.0' /proc/1/status; then

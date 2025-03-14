@@ -5,4 +5,4 @@
 lsiown -R abc:abc \
     /config
 lsiown -R abc:abc \
-    /opt/obsidian
+    /opt/beeper

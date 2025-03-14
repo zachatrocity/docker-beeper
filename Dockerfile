@@ -1,27 +1,28 @@
 FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
 
 # set version label
-ARG BUILD_DATE
-ARG VERSION
-ARG OBSIDIAN_VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="quietsy"
+# ARG BUILD_DATE
+# ARG VERSION
+# ARG BEEPER_VERSION
+# LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="zachatrocity"
 
 # title
-ENV TITLE=Obsidian
+ENV TITLE=Beeper
 
 RUN \
   echo "**** add icon ****" && \
   curl -o \
     /kclient/public/icon.png \
-    https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/obsidian-logo.png && \
+    https://avatars.githubusercontent.com/u/74791520?s=200&v=4 && \
   echo "**** install packages ****" && \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive \
-  echo "**** install obsidian ****" && \
-  if [ -z ${OBSIDIAN_VERSION+x} ]; then \
-    OBSIDIAN_VERSION=$(curl -sX GET "https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest"| awk '/tag_name/{print $4;exit}' FS='[""]'); \
-  fi && \
+  echo "**** install beeper ****" && \
+  # Todo don't hard code beeper version
+  # if [ -z ${BEEPER_VERSION+x} ]; then \
+  #   BEEPER_VERSION=$(curl -sX GET "https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest"| awk '/tag_name/{print $4;exit}' FS='[""]'); \
+  # fi && \
   apt-get install -y --no-install-recommends \
     chromium \
     chromium-l10n \
@@ -33,14 +34,14 @@ RUN \
     python3-xdg && \
   cd /tmp && \
   curl -o \
-    /tmp/obsidian.app -L \
-    "https://github.com/obsidianmd/obsidian-releases/releases/download/${OBSIDIAN_VERSION}/Obsidian-$(echo ${OBSIDIAN_VERSION} | sed 's/v//g').AppImage" && \
-  chmod +x /tmp/obsidian.app && \
-  ./obsidian.app --appimage-extract && \
-  mv squashfs-root /opt/obsidian && \
+    /tmp/beeper.app -L \
+    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.0.522.AppImage" && \
+  chmod +x /tmp/beeper.app && \
+  ./beeper.app --appimage-extract && \
+  mv squashfs-root /opt/beeper && \
   cp \
-    /opt/obsidian/usr/share/icons/hicolor/512x512/apps/obsidian.png \
-    /usr/share/icons/hicolor/512x512/apps/obsidian.png && \
+    /opt/beeper/beepertexts.png \
+    /usr/share/icons/hicolor/512x512/apps/beeper.png && \
   echo "**** cleanup ****" && \
   apt-get autoclean && \
   rm -rf \

@@ -1,42 +1,54 @@
-# Docker Beeper
+# Beeper Desktop in yor web browser!
 
-> **Note:** This repo was a fork of the [LinuxServer.io](https://linuxserver.io) container obsidian image and has been repurposed for Beeper. Support for linux server mods and ecosystem might limited.
+<p align="center">
+  <a href="https://www.beeper.com/">
+    <img src="https://avatars.githubusercontent.com/u/74791520?s=300&v=4" alt="beeper">
+  </a>
+</p>
+
+| Beta App | Legacy App |
+|:--------:|:----------:|
+| ![Beta App](https://gist.githubusercontent.com/zachatrocity/e0246929ef65bb738bcf7a74c42b1bbf/raw/6cdff01bc3e713e28e885460ea4e51f64b8bbe59/IMG_0294.jpeg) | ![Legacy App](https://gist.githubusercontent.com/zachatrocity/e0246929ef65bb738bcf7a74c42b1bbf/raw/6cdff01bc3e713e28e885460ea4e51f64b8bbe59/IMG_0293.jpeg) |
+
+
+> **Note:** This repo was a fork of the [LinuxServer.io](https://linuxserver.io) container obsidian image and has been repurposed for Beeper. Support for linux server mods and ecosystem might limited. If you expose this to the public internet you do so at your own risk
 
 [Beeper](https://www.beeper.com/) is a universal chat app that connects 15 different chat networks including WhatsApp, Signal, Telegram, Slack, Discord, and more.
 
-## Legacy vs Beta Apps
+## tldr installation 
+Docker compose `compose.yml`:
+
+```yaml
+---
+services:
+  beeper:
+    image: ghcr.io/zachatrocity/docker-beeper:latest
+    container_name: beeper
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /path/to/config:/config
+    ports:
+      - 3000:3000
+      - 3001:3001
+    devices:
+      - /dev/dri:/dev/dri #optional
+    shm_size: "1gb"
+    restart: unless-stopped
+```
+
+## Legacy and Beta Apps
 
 This Docker image supports both the legacy and beta (v4) versions of Beeper. You can switch between them using the `USE_LEGACY_BIN` environment variable in your docker-compose file:
 
 - Set `USE_LEGACY_BIN=true` to use the legacy version
 - Set `USE_LEGACY_BIN=false` or omit the variable to use the beta version
 
-Example in docker-compose.yml:
-
-```yaml
-services:
-  beeper:
-    image: ghcr.io/zachatrocity/docker-beeper:latest
-    environment:
-      - USE_LEGACY_BIN=true  # Set to false or remove for beta version
-    # ... other configuration options
-```
-
 The legacy version is the stable, older release of Beeper, while the beta version includes newer features but may be less stable. Choose the version that best suits your needs.
-
-[![beeper](https://avatars.githubusercontent.com/u/74791520?s=300&v=4)](https://www.beeper.com/)
-
-## Supported Architectures
-
-Simply pulling `ghcr.io/zachatrocity/docker-beeper:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
-
-The architectures supported by this image are:
-
-| Architecture | Available | Tag |
-| :----: | :----: | ---- |
-| x86-64 | ✅ | amd64-\<version tag\> |
-| arm64 | ✅ | arm64v8-\<version tag\> |
-| armhf | ❌ | |
 
 ## Application Setup
 

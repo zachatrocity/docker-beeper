@@ -1,13 +1,21 @@
 #!/bin/bash
 
 BIN=/opt/beeper/beepertexts
+LEGACY_BIN=/opt/beeper-legacy/beeper
 
-# Run normally on privved containers or modified un non priv
+# Use legacy bin if USE_LEGACY_BIN is set to true
+if [ "$USE_LEGACY_BIN" = "true" ]; then
+  SELECTED_BIN=$LEGACY_BIN
+else
+  SELECTED_BIN=$BIN
+fi
+
+# Run normally on privved containers or modified in non priv
 if grep -q 'Seccomp:.0' /proc/1/status; then
-  ${BIN} \
+  ${SELECTED_BIN} \
    "$@" > /dev/null 2>&1
 else
-  ${BIN} \
+  ${SELECTED_BIN} \
   --no-sandbox \
    "$@" > /dev/null 2>&1
 fi

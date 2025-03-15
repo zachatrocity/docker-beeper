@@ -8,6 +8,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
+      - USE_LEGACY_BIN=true
     volumes:
       - ./config:/config
     ports:

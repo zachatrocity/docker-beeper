@@ -4,11 +4,31 @@
 
 [Beeper](https://www.beeper.com/) is a universal chat app that connects 15 different chat networks including WhatsApp, Signal, Telegram, Slack, Discord, and more.
 
+## Legacy vs Beta Apps
+
+This Docker image supports both the legacy and beta (v4) versions of Beeper. You can switch between them using the `USE_LEGACY_BIN` environment variable in your docker-compose file:
+
+- Set `USE_LEGACY_BIN=true` to use the legacy version
+- Set `USE_LEGACY_BIN=false` or omit the variable to use the beta version
+
+Example in docker-compose.yml:
+
+```yaml
+services:
+  beeper:
+    image: ghcr.io/zachatrocity/docker-beeper:latest
+    environment:
+      - USE_LEGACY_BIN=true  # Set to false or remove for beta version
+    # ... other configuration options
+```
+
+The legacy version is the stable, older release of Beeper, while the beta version includes newer features but may be less stable. Choose the version that best suits your needs.
+
 [![beeper](https://avatars.githubusercontent.com/u/74791520?s=300&v=4)](https://www.beeper.com/)
 
 ## Supported Architectures
 
-Simply pulling `beeper:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
+Simply pulling `ghcr.io/zachatrocity/docker-beeper:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
 The architectures supported by this image are:
 
@@ -118,7 +138,7 @@ And to assign the GPU in compose:
 ```
 services:
   beeper:
-    image: beeper:latest
+    image: ghcr.io/zachatrocity/docker-beeper:latest
     deploy:
       resources:
         reservations:
@@ -163,7 +183,7 @@ To help you get started creating a container from this image you can either use 
 ---
 services:
   beeper:
-    image: beeper:latest
+    image: ghcr.io/zachatrocity/docker-beeper:latest
     container_name: beeper
     security_opt:
       - seccomp:unconfined #optional
@@ -197,7 +217,7 @@ docker run -d \
   --device /dev/dri:/dev/dri `#optional` \
   --shm-size="1gb" \
   --restart unless-stopped \
-  beeper:latest
+  ghcr.io/zachatrocity/docker-beeper:latest
 ```
 
 ## Parameters
@@ -280,7 +300,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 * Image version number:
 
     ```bash
-    docker inspect -f '{{ index .Config.Labels "build_version" }}' beeper:latest
+    docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/zachatrocity/docker-beeper:latest
     ```
 
 ## Updating Info
@@ -328,7 +348,7 @@ Below are the instructions for updating containers:
 * Update the image:
 
     ```bash
-    docker pull beeper:latest
+    docker pull ghcr.io/zachatrocity/docker-beeper:latest
     ```
 
 * Stop the running container:

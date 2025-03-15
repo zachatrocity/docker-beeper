@@ -7,6 +7,9 @@ FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
 # LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="zachatrocity"
 
+# https://download.beeper.com/linux/
+# legacy appimage: beeper-3.110.1x86_64.AppImage
+
 # title
 ENV TITLE=Beeper
 
@@ -33,6 +36,7 @@ RUN \
     libnss3 \
     python3-xdg && \
   cd /tmp && \
+  echo "**** download beta ****" && \
   curl -o \
     /tmp/beeper.app -L \
     "https://beeper-desktop.download.beeper.com/builds/Beeper-4.0.522.AppImage" && \
@@ -42,6 +46,13 @@ RUN \
   cp \
     /opt/beeper/beepertexts.png \
     /usr/share/icons/hicolor/512x512/apps/beeper.png && \
+  echo "**** download legacy ****" && \
+  curl -o \
+    /tmp/beeper-legacy.app -L \
+    "https://download.beeper.com/linux" && \
+  chmod +x /tmp/beeper-legacy.app && \
+  ./beeper-legacy.app --appimage-extract && \
+  mv squashfs-root /opt/beeper-legacy && \
   echo "**** cleanup ****" && \
   apt-get autoclean && \
   rm -rf \

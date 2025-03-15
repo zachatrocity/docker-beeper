@@ -78,14 +78,5 @@ jobs:
       #     cache-from: type=gha
       #     cache-to: type=gha,mode=max
 
-      # Tag and push images for each tag
-      - name: Tag and push images
-        if: github.event_name != 'pull_request'
-        run: |
-          # Extract the image name without the registry
-          IMAGE_WITHOUT_REGISTRY=$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
-          
-          # For each tag, push the image
-          for tag in $(echo "${{ steps.meta.outputs.tags }}" | tr '\n' ' '); do
-            docker push $tag
-          done
+      # The build and push step above already handles tagging and pushing
+      # No additional steps are needed here

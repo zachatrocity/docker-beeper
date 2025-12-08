@@ -35,7 +35,7 @@ RUN \
   cd /tmp && \
   curl -o \
     /tmp/beeper.app -L \
-    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.0.522.AppImage" && \
+    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.269-x86_64.AppImage" && \
   chmod +x /tmp/beeper.app && \
   ./beeper.app --appimage-extract && \
   mv squashfs-root /opt/beeper && \

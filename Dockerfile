@@ -46,13 +46,6 @@ RUN \
   cp \
     /opt/beeper/beepertexts.png \
     /usr/share/icons/hicolor/512x512/apps/beeper.png && \
-  echo "**** download legacy ****" && \
-  curl -o \
-    /tmp/beeper-legacy.app -L \
-    "https://download.beeper.com/linux" && \
-  chmod +x /tmp/beeper-legacy.app && \
-  ./beeper-legacy.app --appimage-extract && \
-  mv squashfs-root /opt/beeper-legacy && \
   echo "**** cleanup ****" && \
   apt-get autoclean && \
   rm -rf \

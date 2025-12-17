@@ -16,7 +16,7 @@ ENV TITLE=Beeper
 RUN \
   echo "**** add icon ****" && \
   curl -o \
-    /kclient/public/icon.png \
+    /usr/share/selkies/www/icon.png \
     https://avatars.githubusercontent.com/u/74791520?s=200&v=4 && \
   echo "**** install packages ****" && \
   add-apt-repository ppa:xtradeb/apps && \
@@ -31,11 +31,16 @@ RUN \
     chromium \
     chromium-l10n \
     git \
-    libgtk-3-bin \
-    libatk1.0 \
-    libatk-bridge2.0 \
-    libnss3 \
-    python3-xdg && \
+    fonts-dejavu \
+    fonts-dejavu-extra \
+    gir1.2-gst-plugins-bad-1.0 \
+    gir1.2-gstreamer-1.0 \
+    gstreamer1.0-nice \
+    gstreamer1.0-plugins-* \
+    gstreamer1.0-pulseaudio \
+    libosmesa6 \
+    libwebkit2gtk-4.1-0 \
+    libwx-perl && \
   cd /tmp && \
   echo "**** download beta ****" && \
   curl -o \

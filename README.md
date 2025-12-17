@@ -43,7 +43,9 @@ services:
 
 ## Legacy and Beta Apps
 
-⚠️ Beeper has removed the download links for v3 as far as I can tell. The last version of this image that is compatible with `USE_LEGACY_BIN` is [b16f940](https://github.com/zachatrocity/docker-beeper/pkgs/container/docker-beeper/393086004?tag=sha-b16f940b40f8e2f04d9ecd587d780d407b385ca2) 
+⚠️ The last version of this image that is compatible with `USE_LEGACY_BIN` and v3 of beeper is [b16f940](https://github.com/zachatrocity/docker-beeper/pkgs/container/docker-beeper/393086004?tag=sha-b16f940b40f8e2f04d9ecd587d780d407b385ca2) 
+
+
 
 This Docker image supports both the legacy and beta (v4) versions of Beeper. You can switch between them using the `USE_LEGACY_BIN` environment variable in your docker-compose file:
 

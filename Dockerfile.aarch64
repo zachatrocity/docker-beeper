@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
+FROM ghcr.io/linuxserver/baseimage-kasmvnc:arm64v8-debianbookworm
 
 # set version label
 # ARG BUILD_DATE
@@ -6,9 +6,6 @@ FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
 # ARG BEEPER_VERSION
 # LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="zachatrocity"
-
-# https://download.beeper.com/linux/
-# legacy appimage: beeper-3.110.1x86_64.AppImage
 
 # title
 ENV TITLE=Beeper
@@ -36,10 +33,9 @@ RUN \
     libnss3 \
     python3-xdg && \
   cd /tmp && \
-  echo "**** download beta ****" && \
   curl -o \
     /tmp/beeper.app -L \
-    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.269-x86_64.AppImage" && \
+    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.269.AppImage" && \
   chmod +x /tmp/beeper.app && \
   ./beeper.app --appimage-extract && \
   mv squashfs-root /opt/beeper && \

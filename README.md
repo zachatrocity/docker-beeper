@@ -43,7 +43,9 @@ services:
 
 ## Legacy and Beta Apps
 
-⚠️ Beeper has removed the download links for v3 as far as I can tell. The last version of this image that is compatible with `USE_LEGACY_BIN` is [b16f940](https://github.com/zachatrocity/docker-beeper/pkgs/container/docker-beeper/393086004?tag=sha-b16f940b40f8e2f04d9ecd587d780d407b385ca2) 
+⚠️ The last version of this image that is compatible with `USE_LEGACY_BIN` and v3 of beeper is [b16f940](https://github.com/zachatrocity/docker-beeper/pkgs/container/docker-beeper/393086004?tag=sha-b16f940b40f8e2f04d9ecd587d780d407b385ca2) 
+
+
 
 This Docker image supports both the legacy and beta (v4) versions of Beeper. You can switch between them using the `USE_LEGACY_BIN` environment variable in your docker-compose file:
 
@@ -199,19 +201,17 @@ services:
   beeper:
     image: ghcr.io/zachatrocity/docker-beeper:latest
     container_name: beeper
-    security_opt:
-      - seccomp:unconfined #optional
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
+      - DARK_MODE=true #optional
+      - USE_LEGACY_BIN=false
     volumes:
-      - /path/to/config:/config
+      - ./config:/config
     ports:
-      - 3000:3000
-      - 3001:3001
-    devices:
-      - /dev/dri:/dev/dri #optional
+      - 3003:3000
+      - 3005:3001
     shm_size: "1gb"
     restart: unless-stopped
 ```
@@ -221,7 +221,6 @@ services:
 ```bash
 docker run -d \
   --name=beeper \
-  --security-opt seccomp=unconfined `#optional` \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \

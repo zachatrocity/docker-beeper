@@ -2,19 +2,16 @@ services:
   beeper:
     build: .
     container_name: beeper
-    security_opt:
-      - seccomp:unconfined
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
+      - DARK_MODE=true #optional
       - USE_LEGACY_BIN=false
     volumes:
       - ./config:/config
     ports:
       - 3003:3000
       - 3005:3001
-    devices:
-      - /dev/dri:/dev/dri
     shm_size: "1gb"
     restart: unless-stopped

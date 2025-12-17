@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
+FROM ghcr.io/linuxserver/baseimage-selkies:ubuntunoble
 
 # set version label
 # ARG BUILD_DATE
@@ -19,6 +19,7 @@ RUN \
     /kclient/public/icon.png \
     https://avatars.githubusercontent.com/u/74791520?s=200&v=4 && \
   echo "**** install packages ****" && \
+  add-apt-repository ppa:xtradeb/apps && \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive \
   echo "**** install beeper ****" && \
@@ -39,13 +40,14 @@ RUN \
   echo "**** download beta ****" && \
   curl -o \
     /tmp/beeper.app -L \
-    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.269-x86_64.AppImage" && \
+    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.330-x86_64.AppImage" && \
   chmod +x /tmp/beeper.app && \
   ./beeper.app --appimage-extract && \
   mv squashfs-root /opt/beeper && \
   cp \
     /opt/beeper/beepertexts.png \
     /usr/share/icons/hicolor/512x512/apps/beeper.png && \
+  localedef -i en_GB -f UTF-8 en_GB.UTF-8 && \
   echo "**** cleanup ****" && \
   apt-get autoclean && \
   rm -rf \

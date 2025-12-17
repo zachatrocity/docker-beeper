@@ -199,19 +199,17 @@ services:
   beeper:
     image: ghcr.io/zachatrocity/docker-beeper:latest
     container_name: beeper
-    security_opt:
-      - seccomp:unconfined #optional
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
+      - DARK_MODE=true #optional
+      - USE_LEGACY_BIN=false
     volumes:
-      - /path/to/config:/config
+      - ./config:/config
     ports:
-      - 3000:3000
-      - 3001:3001
-    devices:
-      - /dev/dri:/dev/dri #optional
+      - 3003:3000
+      - 3005:3001
     shm_size: "1gb"
     restart: unless-stopped
 ```
@@ -221,7 +219,6 @@ services:
 ```bash
 docker run -d \
   --name=beeper \
-  --security-opt seccomp=unconfined `#optional` \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \

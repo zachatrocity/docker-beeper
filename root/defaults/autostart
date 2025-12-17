@@ -1,3 +1,6 @@
+# Fix permissions
+sudo lsiown -R $(id -u):$(id -u) /opt/beeper
+
 # Enable dark mode if defined
 if [ "${DARK_MODE}" = "true" ] && [ ! -f "$HOME/.config/gtk-3.0/settings.ini" ]; then
   mkdir -p $HOME/.config/gtk-3.0
@@ -7,4 +10,5 @@ elif [ "${DARK_MODE}" != "true" ] && [ -f "$HOME/.config/gtk-3.0/settings.ini" ]
   rm -f "$HOME/.config/gtk-3.0/settings.ini"
 fi
 
-/opt/beeper/AppRun
+export APPDIR='/opt/beeper'
+/opt/beeper/AppRun --no-sandbox --disable-gpu

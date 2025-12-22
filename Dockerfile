@@ -20,9 +20,6 @@ RUN \
     https://avatars.githubusercontent.com/u/74791520?s=200&v=4 && \
   echo "**** install packages ****" && \
   apt-get update && \
-  echo "**** install beeper ****" && \
-  # Get Beeper Version
-  BEEPER_VERSION=$(curl -s 'https://www.beeper.com/changelog/desktop' | grep -o 'class="version-text[^>]*>[^<]*</a>' | head -n 1 | sed 's/.*v\([0-9.]*\).*/\1/') \
   apt-get install -y --no-install-recommends \
     chromium \
     chromium-l10n \
@@ -33,7 +30,8 @@ RUN \
     libnss3 \
     python3-xdg && \
   cd /tmp && \
-  echo "**** download beta ****" && \
+  echo "**** install beeper ****" && \
+  BEEPER_VERSION=$(curl -s 'https://www.beeper.com/changelog/desktop' | grep -o 'class="version-text[^>]*>[^<]*</a>' | head -n 1 | sed 's/.*v\([0-9.]*\).*/\1/') && \
   curl -o \
     /tmp/beeper.app -L \
     "https://beeper-desktop.download.beeper.com/builds/Beeper-$BEEPER_VERSION-x86_64.AppImage" && \

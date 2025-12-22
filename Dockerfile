@@ -21,10 +21,8 @@ RUN \
   echo "**** install packages ****" && \
   apt-get update && \
   echo "**** install beeper ****" && \
-  # Todo don't hard code beeper version
-  # if [ -z ${BEEPER_VERSION+x} ]; then \
-  #   BEEPER_VERSION=$(curl -sX GET "https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest"| awk '/tag_name/{print $4;exit}' FS='[""]'); \
-  # fi && \
+  # Get Beeper Version
+  BEEPER_VERSION=$(curl -s 'https://www.beeper.com/changelog/desktop' | grep -o 'class="version-text[^>]*>[^<]*</a>' | head -n 1 | sed 's/.*v\([0-9.]*\).*/\1/') \
   apt-get install -y --no-install-recommends \
     chromium \
     chromium-l10n \
@@ -38,7 +36,7 @@ RUN \
   echo "**** download beta ****" && \
   curl -o \
     /tmp/beeper.app -L \
-    "https://beeper-desktop.download.beeper.com/builds/Beeper-4.2.269-x86_64.AppImage" && \
+    "https://beeper-desktop.download.beeper.com/builds/Beeper-$BEEPER_VERSION-x86_64.AppImage" && \
   chmod +x /tmp/beeper.app && \
   ./beeper.app --appimage-extract && \
   mv squashfs-root /opt/beeper && \

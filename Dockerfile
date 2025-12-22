@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
+FROM ghcr.io/linuxserver/baseimage-selkies:debiantrixie
 
 # set version label
 # ARG BUILD_DATE
@@ -16,11 +16,10 @@ ENV TITLE=Beeper
 RUN \
   echo "**** add icon ****" && \
   curl -o \
-    /kclient/public/icon.png \
+    /usr/share/selkies/www/icon.png \
     https://avatars.githubusercontent.com/u/74791520?s=200&v=4 && \
   echo "**** install packages ****" && \
   apt-get update && \
-  DEBIAN_FRONTEND=noninteractive \
   echo "**** install beeper ****" && \
   # Todo don't hard code beeper version
   # if [ -z ${BEEPER_VERSION+x} ]; then \

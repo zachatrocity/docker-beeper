@@ -11,4 +11,4 @@ elif [ "${DARK_MODE}" != "true" ] && [ -f "$HOME/.config/gtk-3.0/settings.ini" ]
 fi
 
 export APPDIR='/opt/beeper'
-/opt/beeper/AppRun --no-sandbox --disable-gpu
+/opt/beeper/beepertexts --no-sandbox

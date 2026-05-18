@@ -1,4 +1,4 @@
-# Beeper Desktop in yor web browser!
+# Beeper Desktop in your web browser!
 
 <p align="center">
   <a href="https://www.beeper.com/">
